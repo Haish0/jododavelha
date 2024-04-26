@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html>
+    <body>
+        <head>
+            <style>
+                body{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    background-color: #ad9a6f;
+                }
+                h1{
+                color: #615050;
+               }
+                #game{
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    background-color:#776a6a;
+                    border-radius: 10px;
+                }
+                .buttonGame{
+                    background-color: #fcfcfc;
+                    margin: 15px;
+                    border: 0px;
+                    height: 100px;
+                    width: 100px;
+                    color: #615050;
+                    background-color: #f5f1e8;
+                    border-radius: 10px;
+                    font-size: 60px;
+                }
+                #game2{
+                    font-size: 30px;
+                    color: #615050;
+                }
+                
+                
+            </style>
+        </head>
+            
+        <h1>Jogo da Velha</h1>
+        <div id="game">
+        </div>
+        <div id="game2">
+            vez do X
+        </div>
+
+        <script>
+            let jogadas = [
+                '','','',
+                '','','',
+                '','','',
+            ];
+            const game = document.querySelector('#game')
+            const game2 = document.querySelector('#game2')
+            let vez=0;
+            let empate=0;
+            let gameover = false;
+            function clickDoJogador(index){
+                if(jogadas[index]=='' && gameover==false){
+                if(vez==0 || vez%2==0){
+                game2.innerHTML = 'vez do O'
+                jogadas[index] = 'X'
+                empate++
+                desenhaBotoes()
+            }
+                else{
+                game2.innerHTML = 'vez do X'
+                jogadas[index] = 'O'
+                empate++
+                desenhaBotoes()
+                }
+                vez++
+
+                if(empate==9 && gameover==false){
+                    game2.innerHTML = 'Empate'
+                }
+            }
+
+            function verificaCelulas(c1,c2,c3){
+                let ganhou =(
+                jogadas[c1] != ''&&
+                jogadas[c2] != ''&&
+                jogadas[c3] != ''&&
+                jogadas[c1] == jogadas[c2]&&
+                jogadas[c2]== jogadas[c3]
+            );
+                if(ganhou){
+                    game2.innerHTML = `Jogador ${jogadas[c1]} ganhou`
+                    game.children[c1].style = "background-color: #ad9a6f"
+                    game.children[c2].style = "background-color: #ad9a6f"
+                    game.children[c3].style = "background-color: #ad9a6f"
+                }
+
+            return ganhou;
+            }
+
+            function verificaGanhador(){
+               if
+               (verificaCelulas(0,1,2) ||
+                verificaCelulas(3,4,5) ||
+                verificaCelulas(6,7,8) ||
+
+                verificaCelulas(0,3,6) ||
+                verificaCelulas(1,4,7) ||
+                verificaCelulas(2,5,8) ||
+
+                verificaCelulas(0,4,8) ||
+                verificaCelulas(2,4,6)
+            ){
+            gameover=true
+            }
+                }
+            
+            verificaGanhador();
+            }
+            function desenhaBotoes(){
+                game.innerHTML =''
+            for(let i=0;i<9;i++){
+                game.innerHTML += `<button class="buttonGame" onclick="clickDoJogador(${i})">${jogadas[i]}</button>`
+            }
+            }          
+        desenhaBotoes()
+        </script>
+
+    </body>
+</html>
